@@ -8,15 +8,15 @@ import Vuetify from "vuetify";
 
 export class UIRegistry {
 
-    /**
-     * Инициализация реестра компонентов, фильтров и директив
-     */
-    static init(): void {
-        Vue.use(Vuetify, {
-            lang: {
-                current: "ru"
-            }
-        });
-        dayjs.locale("ru");
-    }
+  /**
+   * Инициализация реестра компонентов, фильтров и директив
+   */
+  static init(): void {
+    Vue.use(Vuetify, {
+      lang: {
+        current: "ru"
+      }
+    });
+    dayjs.locale("ru");
+  }
 }
