@@ -11,7 +11,7 @@ import axios from "axios";
 
           <table-data 
             v-if="tableData.length"
-            :data="tableData"
+            :tableData="tableData"
           />
 
           <!-- todo вывести таблицу с событиями, колонки: Дата (date), Сумма (totalAmount), Количество (quantity), Название (label), Комментарий (comment), Период (period) -->
@@ -21,24 +21,24 @@ import axios from "axios";
 })
 export class MainPage extends UI {
 
-  private events: Array<TableData> = [];
+  private events: Array<TableDataType> = [];
 
   get tableData() {
-    return this.events.map(({ 
-      date, 
-      totalAmount, 
-      quantity, 
+    return this.events.map(({
+      date,
+      totalAmount,
+      quantity,
       label,
-      comment, 
+      comment,
       period }) => ({
-        date, 
-        totalAmount, 
-        quantity, 
-        label, 
-        comment, 
+        date,
+        totalAmount,
+        quantity,
+        label,
+        comment,
         period
       }))
-  } 
+  }
 
   async created(): Promise<void> {
     this.events = (await axios.get('http://localhost:3004/events')).data;

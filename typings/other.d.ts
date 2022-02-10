@@ -23,7 +23,7 @@ declare interface WidgetMessage {
   topic?: string;
 }
 
-declare interface TableData {
+declare interface TableDataType {
   date: string;
   amountPerShare: string;
   cleanAmountPerShare?: string;
