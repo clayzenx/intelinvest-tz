@@ -9,7 +9,7 @@ import { Component, VModel, UI } from "../app/ui";
       class="elevation-1"
     >
       <template v-slot:items="props">
-        <td v-for="(value, key) in props.item" v-if="key !== 'id'"> 
+        <td v-for="(value, key) in props.item" v-if="key !== 'id' && key !== 'type'"> 
           <v-checkbox
             v-if="typeof value === 'boolean'"
             :input-value="value"
@@ -43,7 +43,7 @@ export class TableData extends UI {
   get headers() {
     return [
       ...Object.keys(this.tableData[0])
-        .filter(key => key !== 'id')
+        .filter(key => key !== 'id' && key !== 'type')
         .map(key =>
           ({ text: TableData.locale[key] || key, value: key })
         ),
