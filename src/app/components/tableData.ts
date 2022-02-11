@@ -37,7 +37,8 @@ export class TableData extends UI {
   }
 
   onChange(idx: number, newValue: boolean) {
-    this.tableData = this.tableData.map(row => ({ ...row, selected: row.id === idx ? newValue : row.selected }))
+    this.tableData = this.tableData.map(row =>
+      ({ ...row, selected: row.id === idx ? newValue : row.selected }))
   }
 
   get headers() {
