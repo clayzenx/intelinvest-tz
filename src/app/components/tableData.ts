@@ -1,28 +1,30 @@
-import { Component, Prop, UI } from "../app/ui";
+import { Component, VModel, UI } from "../app/ui";
 
 @Component({
   // language=Vue
   template: `
     <v-data-table
       :headers="headers"
-      :items="items"
+      :items="tableData"
       class="elevation-1"
     >
       <template v-slot:items="props">
-        <td v-for="prop in props.item">{{ prop }}</td>
-        <td> 
+        <td v-for="(value, key) in props.item" v-if="key !== 'id'"> 
           <v-checkbox
-            :input-value="props.selected"
+            v-if="typeof value === 'boolean'"
+            :input-value="value"
+            @change="value => onChange(props.item.id, value)"
             primary
             hide-details
           ></v-checkbox>
-        </td> 
+          <span v-else>{{value}}</span>
+        </td>
       </template>
     </v-data-table>
   `
 })
 export class TableData extends UI {
-  @Prop({ required: true, type: Array, default: [] }) readonly tableData: Array<TableDataType>
+  @VModel({ type: Array, default: [] }) tableData!: Array<TableDataType>
 
   private static locale: any = {
     date: "Дата",
@@ -30,24 +32,22 @@ export class TableData extends UI {
     quantity: "Количество",
     label: "Назввание",
     comment: "Комменарий",
-    period: "Период"
+    period: "Период",
+    selected: "Выбор"
+  }
+
+  onChange(idx: number, newValue: boolean) {
+    this.tableData = this.tableData.map(row => ({ ...row, selected: row.id === idx ? newValue : row.selected }))
   }
 
   get headers() {
     return [
-      ...Object.keys(this.tableData[0]).map(key =>
-        ({ text: TableData.locale[key] || key, value: key })
-      ),
-      { text: 'Выбор', value: 'select' }
+      ...Object.keys(this.tableData[0])
+        .filter(key => key !== 'id')
+        .map(key =>
+          ({ text: TableData.locale[key] || key, value: key })
+        ),
     ]
-  }
-
-  get items() {
-    return this.tableData
-  }
-
-  get selected() {
-    return this.tableData
   }
 }
 

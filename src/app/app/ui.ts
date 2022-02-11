@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Component from "vue-class-component";
-import { Emit, Model, Prop, Watch } from "vue-property-decorator";
+import { Emit, Model, Prop, Watch, VModel } from "vue-property-decorator";
 import { Route } from "vue-router/types/router";
 import { Resolver } from "../../../typings/vue";
 
@@ -10,7 +10,7 @@ Component.registerHooks([
   "beforeRouteUpdate"
 ]);
 
-export { Component, Emit, Model, Prop, Watch };
+export { Component, Emit, Model, Prop, Watch, VModel };
 
 export class UI extends Vue {
 

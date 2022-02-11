@@ -24,20 +24,22 @@ declare interface WidgetMessage {
 }
 
 declare interface TableDataType {
-  date: string;
-  amountPerShare: string;
+  date?: string;
+  amountPerShare?: string;
   cleanAmountPerShare?: string;
-  quantity: string;
+  quantity?: string;
   portfolioId?: number;
-  executed: boolean;
-  comment: string;
+  executed?: boolean;
+  comment?: string;
   tax?: string;
-  cleanAmount: string;
-  totalAmount: string;
-  totalAmountOriginal: string;
-  label: string;
-  period: string;
-  type: string;
+  cleanAmount?: string;
+  totalAmount?: string;
+  totalAmountOriginal?: string;
+  label?: string;
+  period?: string;
+  type?: string;
+  id?: number;
+  selected?: boolean;
 }
 
 

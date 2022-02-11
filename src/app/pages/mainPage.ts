@@ -11,8 +11,13 @@ import axios from "axios";
 
           <table-data 
             v-if="tableData.length"
-            :tableData="tableData"
+            v-model="tableData"
           />
+
+          <pre>
+            {{selectedEventsData}}
+          </pre>
+
 
           <!-- todo вывести таблицу с событиями, колонки: Дата (date), Сумма (totalAmount), Количество (quantity), Название (label), Комментарий (comment), Период (period) -->
         </v-container>
@@ -23,24 +28,35 @@ export class MainPage extends UI {
 
   private events: Array<TableDataType> = [];
 
+  private eventsData: Array<TableDataType> = []
+  private selectedEventsData: Array<TableDataType> = [];
+
   get tableData() {
-    return this.events.map(({
+    return this.eventsData
+  }
+
+  set tableData(tableData) {
+    this.eventsData = tableData
+    this.selectedEventsData = tableData.filter(({ selected }) => selected)
+  }
+
+  async created(): Promise<void> {
+    this.events = (await axios.get('http://localhost:3004/events')).data
+    this.eventsData = this.events.map(({
       date,
       totalAmount,
       quantity,
       label,
       comment,
-      period }) => ({
+      period }, idx) => ({
         date,
         totalAmount,
         quantity,
         label,
         comment,
-        period
+        period,
+        selected: false,
+        id: idx
       }))
-  }
-
-  async created(): Promise<void> {
-    this.events = (await axios.get('http://localhost:3004/events')).data;
   }
 }
