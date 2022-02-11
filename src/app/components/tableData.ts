@@ -1,4 +1,5 @@
 import { Component, VModel, UI } from "../app/ui";
+import { RouterConfiguration } from "../../app/router/routerConfiguration";
 
 @Component({
   // language=Vue
@@ -9,7 +10,11 @@ import { Component, VModel, UI } from "../app/ui";
       class="elevation-1"
     >
       <template v-slot:items="props">
-        <td v-for="(value, key) in props.item" v-if="key !== 'id' && key !== 'type'"> 
+        <td 
+          v-for="(value, key) in props.item" 
+          v-if="key !== 'id' && key !== 'type'"
+          @click="() => typeof value === 'boolean' ? '' : redirect(props.item.id)"
+        > 
           <v-checkbox
             v-if="typeof value === 'boolean'"
             :input-value="value"
@@ -18,7 +23,6 @@ import { Component, VModel, UI } from "../app/ui";
             hide-details
           ></v-checkbox>
           <span v-else>{{value}}</span>
-        </td>
       </template>
     </v-data-table>
   `
@@ -39,6 +43,10 @@ export class TableData extends UI {
   onChange(idx: number, newValue: boolean) {
     this.tableData = this.tableData.map(row =>
       ({ ...row, selected: row.id === idx ? newValue : row.selected }))
+  }
+
+  redirect(idx: number) {
+    RouterConfiguration.getRouter().push(`/event/${idx}`)
   }
 
   get headers() {

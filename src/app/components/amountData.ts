@@ -7,7 +7,7 @@ import { Component, Prop, UI } from "../app/ui";
       <v-card-title><h4>Сумма по категориям</h4></v-card-title>
       <v-divider></v-divider>
       <v-list dense>
-        <div v-if="amountByCategory">
+        <div v-if="Object.keys(amountByCategory).length">
           <v-list-tile v-for="(value, key) in amountByCategory">
             <v-list-tile-content>{{key}}</v-list-tile-content>
             <v-list-tile-content class="align-end">{{value}}</v-list-tile-content>
